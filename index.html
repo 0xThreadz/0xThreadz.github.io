@@ -252,10 +252,6 @@
   body.ready .card.tilting { animation: none; opacity: 1; transform: none; }
 
   @media (max-width: 380px) { .card { padding: 28px 14px 22px; } h1 { font-size: 24px; } }
-  @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after { animation-duration: .001s !important; animation-delay: 0s !important; transition-duration: .001s !important; }
-    #intro { display: none; }
-  }
 </style>
 </head>
 <body class="locked">
@@ -344,7 +340,9 @@ const ICONS = {
 const ARROW = '<svg class="arrow" viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>';
 
 const $ = (s) => document.querySelector(s);
-const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+// Le animazioni restano sempre attive: molti PC Windows hanno "animazioni di sistema" disattivate
+// senza saperlo, e rispettare quell'impostazione toglieva intro ed effetti.
+const reduced = false;
 const esc = (s) => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 
